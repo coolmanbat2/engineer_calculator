@@ -1,0 +1,27 @@
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/test.css') }}">
+
+
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>mathCalc</title>
+</head>
+
+<body>
+
+<form action="/areasquare" method="POST">
+	<label for="textarea">Length:</label>
+	<textarea name="length" id="textarea">{{ length }}</textarea>
+
+	<label for="textarea">width:</label>
+	<textarea name="width" id="textarea">{{ width }}</textarea>
+
+	<label for="textarea">Area:</label>
+	<textarea name="area" id="textarea">{{ areaValue }}</textarea>
+
+	<button type="submit" id="button-addon1">button</button>
+</form>
+
+</body>
+</html>
