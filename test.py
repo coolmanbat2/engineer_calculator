@@ -1,5 +1,7 @@
 from flask import Flask, flash, redirect, render_template, request, session, abort
 
+app = Flask(__name__)
+
 class FormulaInterface():
     """
     Formula interface that provides conveinence in creating equations
@@ -18,10 +20,13 @@ class Square(FormulaInterface):
     def formula(length, width):
         return int(length)*int(width)
 
+
+@app.route("/")
+def index():
+    return "Click me! <a href='/areasquare/' class='button'>Square</button>"
 # Finds the area, then posts it on the page.
 @app.route('/areasquare/', methods=['GET', 'POST'])
 def areas():
-
 	areaValue = ""
 	length = ""
 	width = ""
