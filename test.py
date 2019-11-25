@@ -1,4 +1,5 @@
 from flask import Flask, flash, redirect, render_template, request, session, abort
+from sympy import *
 
 app = Flask(__name__)
 
@@ -12,8 +13,6 @@ class FormulaInterface():
     Author: Thanusun
     Date: October 18th, 2019
     """
-    numInputs = 0
-    numOutputs = 0
     def getInputs():
         raise NotImplementedError("You Must Implement This :)")
     def getOutputs():
@@ -29,14 +28,25 @@ class Square(FormulaInterface):
     Author: Thanusun
     Date: October 20th, 2019
     """
-    FormulaInterface.numInputs = 2
-    FormulaInterface.numOutputs = 1
     def getInputs():
         return FormulaInterface.numInputs
     def getOutputs():
         return FormulaInterface.numOutputs
-    def formula(length, width):
-        return int(length)*int(width)
+    def formula(length, width, Area):
+        formula = int(length)*int(width)
+        # Finds which variable must be solved.
+        if not length:
+            # uses the variable to make a symbol, then
+            # creates a formula corresponding to it.
+            length = symbols('l')
+            formula = solve(Area-formula, width)
+        elif not width:
+            width = symbols('w')
+            formula = solve(Area-formula, length)
+        elif not Area:
+            formula = int(length)*int(width)
+        return formula
+
 
 # Homepage
 @app.route("/")
@@ -46,15 +56,17 @@ def index():
 # Finds the area, then posts it on the page.
 @app.route('/areasquare/', methods=['GET', 'POST'])
 def areas():
-	areaValue = ""
-	length = ""
-	width = ""
-	if request.method == 'POST':
-		length = request.form['length']
-		width = request.form['width']
-		areaValue = Square.formula(length, width)
+    areaValue = ""
+    length = ""
+    width = ""
+    area = ""
+    if request.method == 'POST':
+        length = request.form['length']
+        width = request.form['width']
+        area = request.form['areaValue']
+        areaValue = Square.formula(length, width, area)
 
-	return render_template('mathcalc.html', areaValue=areaValue,
+    return render_template('mathcalc.html', areaValue=areaValue,
 											length=length,
 											width=width)
 
