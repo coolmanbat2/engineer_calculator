@@ -69,7 +69,9 @@ class Formulas():
             formula = solve(K-formula, X_0)[0]
         return formula
 
-
+@app.route("/")
+def index():
+    return render_template("Hello world! Click here <a href=\"/rectangle\">Here</a>")
 
 @app.route('/rectangle', methods=['GET', 'POST'])
 def rectangleArea():
