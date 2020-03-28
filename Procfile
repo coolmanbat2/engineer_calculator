@@ -1,1 +1,1 @@
-web: gunicorn backend:test
+web: gunicorn test:test
