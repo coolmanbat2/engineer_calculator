@@ -1,2 +1,2 @@
-web: python test.py
+web: python backend.py
 worker: python scripts.py
