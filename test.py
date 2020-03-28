@@ -121,4 +121,4 @@ def scArea():
     return jsonify(solution)
 
 if __name__ == "__main__":
-    app.run(port=5000, debug=True)
+    app.run(environ.get('PORT'))
